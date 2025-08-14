@@ -1,6 +1,7 @@
 import os
 import argparse
-import json
+import sys
+import time
 import torch
 import pandas as pd
 import numpy as np
@@ -10,8 +11,7 @@ from torch.optim import AdamW
 from sklearn.model_selection import StratifiedKFold, train_test_split
 from sklearn.utils.class_weight import compute_class_weight
 from sklearn.metrics import f1_score, precision_score, recall_score, classification_report
-import sys
-import time
+
 
 # Argument parsing
 parser = argparse.ArgumentParser()
@@ -51,8 +51,11 @@ STRIDE = 256
 EPOCHS = 15
 LR = 1e-5
 
+# Dataset path - modify this to point to your dataset
+PATH = "/path/to/your/dataset.xlsx"
+
 # Load dataset
-df = pd.read_excel("/path/to/dataset", engine='openpyxl')
+df = pd.read_excel(PATH, engine='openpyxl')
 df = df[['personid','narrative',LABEL_COL]]
 texts = df['narrative'].tolist()
 labels = df[LABEL_COL].tolist()
