@@ -1,6 +1,7 @@
 import os
 import argparse
-import json
+import sys
+import time
 import torch
 import pandas as pd
 import numpy as np
@@ -10,9 +11,6 @@ from torch.optim import AdamW
 from sklearn.model_selection import train_test_split
 from sklearn.utils.class_weight import compute_class_weight
 from sklearn.metrics import f1_score, precision_score, recall_score, classification_report
-import sys
-import time
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--label_col', type=str, required=True, help='Name of the label column to use')
@@ -54,8 +52,11 @@ STRIDE = 256
 EPOCHS = 15
 LR = 1e-5
 
+# Dataset path - modify this to point to your dataset
+PATH = "/path/to/your/dataset.xlsx"
+
 # Load dataset
-df = pd.read_excel("/path/to/dataset", engine='openpyxl')
+df = pd.read_excel(PATH, engine='openpyxl')
 df = df[['personid','narrative',LABEL_COL]]
 id_col = df['personid']
 text_col = df['narrative']
